@@ -82,7 +82,7 @@ foreach my $item (@$resources) {
     print "$item->{maxcpu},";
     print "$ram,";
     print "$roundeddisk,";
-    print "type=$item->{type} vmid=$item->{vmid} node=$item->{node} pool=$item->{pool}";
+    print "type=$item->{type} vmid=$item->{vmid} node=$item->{node}";
     print "\n";
 }
 

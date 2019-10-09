@@ -8,8 +8,8 @@ Example:
 
 ```
 $ ./proxmox2netbox --host 12.23.34.45:8006 --username $username --password $password  --cluster $cluster
-name,cluster,role,vcpus,memory,disk,comments
-my-vm,my-cluster,Virtual Machine,2,4096,32,vmid=132
+name,cluster,status,vcpus,memory,disk,comments
+my-vm,my-cluster,Active,4,8192,50,type=qemu vmid=100 node=pve1
 ...
 ```
 
