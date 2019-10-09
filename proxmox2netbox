@@ -62,19 +62,27 @@ my $resources = $pve->get("/cluster/resources");
 
 # openvz and qemu objects are exactly the same.
 # only the item->{type} value differs (openvz or qemu)
-print "name,cluster,role,vcpus,memory,disk,comments\n";
+print "name,cluster,status,vcpus,memory,disk,comments\n";
 foreach my $item (@$resources) {
-    next unless $item->{type} eq 'qemu';
+    next unless ( $item->{type} eq 'qemu' || $item->{type} eq 'lxc' );
 
     my $ram  = $item->{maxmem} / 1024 / 1024;
     my $disk = $item->{maxdisk} / 1024 / 1024 / 1024;
+    my $roundeddisk = sprintf "%.0f", $disk;
 
     print "$item->{name},";
     print "$cluster,";
-    print "Virtual Machine,";
+    if ($item->{status} eq 'running') {
+        print "Active,";
+    } elsif ($item->{status} eq 'stopped') {
+        print "Offline,";
+    } else {
+        print "Staged,";
+    }
     print "$item->{maxcpu},";
     print "$ram,";
-    print "$disk,";
-    print "vmid=$item->{vmid}";
+    print "$roundeddisk,";
+    print "type=$item->{type} vmid=$item->{vmid} node=$item->{node} pool=$item->{pool}";
     print "\n";
 }
+
